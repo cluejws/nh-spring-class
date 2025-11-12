@@ -1,0 +1,1 @@
+nh-spring-class
