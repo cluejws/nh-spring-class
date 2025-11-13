@@ -1,5 +1,7 @@
 plugins {
-    // id 'java' -> application에 포함되어 있음 
+    // id 'java' -> application에 포함되어 있음
+    id 'eclipse'
+    id 'eclipse-wtp'
     id 'application'
 }
 
