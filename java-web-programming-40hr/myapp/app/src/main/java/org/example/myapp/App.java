@@ -5,11 +5,10 @@ package org.example.myapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @SpringBootApplication
 public class App {
 
@@ -17,8 +16,7 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
-    @RequestMapping("/hi")
-    @ResponseBody
+    @GetMapping("/hi")
     public String hello(String name) {
         return "Hello, " + name + "!";
     }
