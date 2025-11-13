@@ -1,17 +1,21 @@
 plugins {
-    // id 'java' -> application에 포함되어 있음
-    id 'eclipse'
-    id 'eclipse-wtp'
-    id 'application'
+    id 'java'
+    id 'org.springframework.boot' version '3.5.7'
 }
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // testImplementation 'org.junit.jupiter:junit-jupiter:5.12.1'
-    // testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 java {
@@ -20,18 +24,10 @@ java {
     }
 }
 
-application {
-    mainClass = 'org.example.myapp.App'
-}
-
 tasks.named('test') {
     useJUnitPlatform()
 }
 
 tasks.named('jar') {
     archiveFileName.set('myapp.jar')
-}
-
-tasks.named('run') {
-    standardInput = System.in // 표준 입력을 시스템 입력으로 설정
 }
