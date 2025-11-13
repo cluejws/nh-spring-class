@@ -28,6 +28,6 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.named('jar') {
+tasks.named('bootJar') {
     archiveFileName.set('myapp.jar')
 }
