@@ -31,3 +31,7 @@ tasks.named('test') {
 tasks.named('jar') {
     archiveFileName.set('myapp.jar')
 }
+
+tasks.named('run') {
+    standardInput = System.in // 표준 입력을 시스템 입력으로 설정
+}
