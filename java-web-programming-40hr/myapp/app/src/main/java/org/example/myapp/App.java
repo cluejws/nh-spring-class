@@ -5,10 +5,10 @@ package org.example.myapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @SpringBootApplication
 public class App {
 
@@ -19,5 +19,10 @@ public class App {
     @GetMapping("/hi")
     public String hello(String name) {
         return "Hello1, " + name + "!";
+    }
+
+    @GetMapping("/help") // "/help" URL 요청을 help.html 템플릿으로 매핑
+    public String help() {
+        return "help"; // templates/help.html 파일을 렌더링
     }
 }
