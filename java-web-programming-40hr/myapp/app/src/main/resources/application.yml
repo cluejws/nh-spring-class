@@ -3,3 +3,6 @@ server:
 spring:
   application:
     name: myapp # 애플리케이션 이름
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
