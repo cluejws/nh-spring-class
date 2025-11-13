@@ -18,6 +18,6 @@ public class App {
 
     @GetMapping("/hi")
     public String hello(String name) {
-        return "Hello, " + name + "!";
+        return "Hello1, " + name + "!";
     }
 }
