@@ -1,6 +1,6 @@
 plugins {
-    id 'java'
-    // id 'application'
+    // id 'java' -> application에 포함되어 있음 
+    id 'application'
 }
 
 repositories {
@@ -18,10 +18,10 @@ java {
     }
 }
 
-// application {
-//     mainClass = 'org.example.App'
-// }
+application {
+    mainClass = 'org.example.App'
+}
 
-// tasks.named('test') {
-//     useJUnitPlatform()
-// }
+tasks.named('test') {
+    useJUnitPlatform()
+}
