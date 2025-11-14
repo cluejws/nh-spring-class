@@ -1,12 +1,15 @@
 package org.example.myapp.repository;
 
 import org.example.myapp.domain.Board;
+import org.example.myapp.dto.BoardDetailDto;
+import org.example.myapp.dto.BoardSummaryDto;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 @Repository // Spring IoC 컨테이너가 관리하는 객체로 설정
 public class BoardRepository {
@@ -19,18 +22,43 @@ public class BoardRepository {
         list.add(board);
     }
 
-    public List<Board> findAll() {
-        return list;
+    public List<BoardSummaryDto> findAll() {
+        return list.stream()
+                .map(
+                        board -> {
+                            BoardSummaryDto response = new BoardSummaryDto();
+                            response.setNo(board.getNo());
+                            response.setTitle(board.getTitle());
+                            response.setViewCount(board.getViewCount());
+                            response.setCreatedDate(board.getCreatedDate());
+                            return response;
+                        })
+                .toList();
     }
 
-    public Board findByNo(Long no) {
+    public BoardDetailDto findByNo(Long no) {
         for (Board board : list) {
             if (board.getNo().equals(no)) {
-                return board;
+                BoardDetailDto response = new BoardDetailDto();
+                response.setNo(board.getNo());
+                response.setTitle(board.getTitle());
+                response.setContent(board.getContent());
+                response.setCreatedDate(board.getCreatedDate());
+                response.setViewCount(board.getViewCount());
+                return response;
             }
         }
+        return null; // 해당 번호의 게시글이 없을 경우 null 반환
+    }
 
-        return null;
+    // 게시글 조회 시 조회수를 증가시키는 메서드 추가
+    public void updateViewCount(Long no) {
+        for (Board board : list) {
+            if (board.getNo().equals(no)) {
+                board.setViewCount(board.getViewCount() + 1);
+                return;
+            }
+        }
     }
 
     public void update(Board board) {

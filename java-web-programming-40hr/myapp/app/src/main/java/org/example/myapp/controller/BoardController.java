@@ -1,6 +1,7 @@
 package org.example.myapp.controller;
 
 import org.example.myapp.domain.Board;
+import org.example.myapp.dto.*;
 import org.example.myapp.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,46 +27,30 @@ public class BoardController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute Board board) {
-        boardService.addBoard(board);
+    public String add(@ModelAttribute BoardCreateRequest request) {
+        boardService.addBoard(request);
         return "redirect:/board/list"; // 저장 후 게시글 목록 페이지로 리다이렉트
     }
 
     @GetMapping("/list")
     public String list(Model model) {
-        List<Board> boards = boardService.getAllBoards();
+        List<BoardSummaryDto> list = boardService.getAllBoards();
+        List<BoardResponse> boards = list.stream().map(BoardResponse::from).toList();
         model.addAttribute("boards", boards); // 모델에 게시글 목록 추가
         return "board/list"; // 게시글 목록 페이지로 이동
     }
 
     @GetMapping("/view")
-    public String view(Long no, Model model) {
-        Board board = boardService.getBoardByNo(no);
-        if (board == null) {
-            return "redirect:/board/list"; // 게시글이 없으면 목록 페이지로 리다이렉트
-        }
-
-        board.setViewCount(board.getViewCount() + 1); // 조회수 증가
-
-        // List 에 저장된 객체의 값을 그대로 변경했기 때문에 추가로 updateBoard()를 호출할 필요는 없다.
-        // boardService.updateBoard(board); // 조회수 업데이트
-        model.addAttribute("board", board); // 모델에 게시글 추가
+    public String view(@RequestParam("no") Long no, Model model) {
+        BoardDetailDto boardDetailDto = boardService.getBoardByNo(no);
+        model.addAttribute("board", BoardResponse.from(boardDetailDto)); // 모델에 게시글 추가
         return "board/view"; // 게시글 조회 페이지로 이동
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Board board) {
-        if (board == null) {
-            return "redirect:/board/list"; // 게시글이 없으면 목록 페이지로 리다이렉트
-        }
-
-        Board old = boardService.getBoardByNo(board.getNo());
-        old.setTitle(board.getTitle());
-        old.setContent(board.getContent());
-
-        // List 에 저장된 객체의 값을 변경했기 때문에 추가로 updateBoard()를 호출할 필요는 없다.
-        // boardService.updateBoard(board);
-        return "redirect:/board/view?no=" + board.getNo(); // 변경 후 게시글 조회 페이지로 리다이렉트
+    public String update(@ModelAttribute BoardUpdateRequest request) {
+        boardService.updateBoard(request);
+        return "redirect:/board/list"; // 변경 후 게시글 목록 페이지로 리다이렉트
     }
 
     @PostMapping("/delete")
