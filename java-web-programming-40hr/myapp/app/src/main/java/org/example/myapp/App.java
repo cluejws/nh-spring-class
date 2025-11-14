@@ -18,7 +18,7 @@ public class App {
 
     @GetMapping("/hi")
     public String hello(String name) {
-        return "Hello1, " + name + "!";
+        return "hi";
     }
 
     @GetMapping("/help") // "/help" URL 요청을 help.html 템플릿으로 매핑
