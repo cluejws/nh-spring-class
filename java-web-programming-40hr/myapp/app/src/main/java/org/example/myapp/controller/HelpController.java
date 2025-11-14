@@ -1,17 +1,11 @@
 package org.example.myapp.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HelpController {
 
-    @RequestMapping(
-            path = "/help",
-            method = {RequestMethod.GET}
-    )
-    public String help() {
-        return "help";
-    }
+    @GetMapping(value = "/help")
+    public void help() {}
 }
