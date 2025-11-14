@@ -20,9 +20,4 @@ public class App {
     public String hello(String name) {
         return "hi";
     }
-
-    @GetMapping("/help") // "/help" URL 요청을 help.html 템플릿으로 매핑
-    public String help() {
-        return "help"; // templates/help.html 파일을 렌더링
-    }
 }
